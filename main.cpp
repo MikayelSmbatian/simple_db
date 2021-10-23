@@ -3,10 +3,13 @@
 //
 #include <string>
 #include <iostream>
+#include "Reader.h"
+#include "Executable.h"
+#include "Utils.h"
 
-void print_promt()
+void PrintPromt()
 {
-    std::cout << "db> ";
+    std::cout << "db> " << std::flush;
 }
 
 int main(int argc, char** argv)
@@ -14,15 +17,18 @@ int main(int argc, char** argv)
     std::string input;
     while(true)
     {
-        print_promt();
-        std::getline(std::cin, input);
-        if(input == ".exit")
+        PrintPromt();
+        input = simple_db::ReadCommand(simple_db::ConsoleReader());
+
+        if(simple_db::utils::IsMetaCommand(input))
         {
-            break;
+            simple_db::MetaCommand metaCommand{input};
+            simple_db::Execute(metaCommand);
         }
         else
         {
-            std::cout << "Unrecognized command: " << input << "\n";
+            simple_db::Statement stmt{input};
+            simple_db::Execute(stmt);
         }
     }
 }
