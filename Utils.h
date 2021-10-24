@@ -8,6 +8,9 @@
 
 namespace simple_db::constants
 {
+
+static constexpr int c_pageSize = 4096;
+
 using namespace std::string_literals;
 /// \brief Statement types.
 /// \{
